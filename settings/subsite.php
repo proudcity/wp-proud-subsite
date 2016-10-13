@@ -48,7 +48,7 @@ class ProudSubsitePage
         'alert_message' => [
           '#type' => 'textarea',
           '#title' => __pcHelp('Primary navigation code'),
-          '#description' => __pcHelp('HTML code of for the primary menu.   Leave blank to use this site\'s primary menu.'),
+          '#description' => __(sprintf('HTML code for the primary menu items.  Should look like %s. <strong>Leave blank to use this site\'s primary menu.</strong>', htmlentities( '<li><a>Title</a></li>' ) ), 'proud_subsite' ),
           '#name' => 'proud_subsite_primary_menu',
           '#value' => get_option('proud_subsite_primary_menu')
         ],
