@@ -10,8 +10,6 @@ Author URI:         http://getproudcity.com
 License:            Affero GPL v3
 */
 
-require_once( plugin_dir_path(__FILE__) . 'settings/subsite.php' );
-
 // Load Extendible
 // -----------------------
 if ( ! class_exists( 'ProudPlugin' ) ) {
@@ -29,10 +27,21 @@ class ProudSubsite extends \ProudPlugin {
       'plugin_path'    => __FILE__,
     ) );
 
+    $this->hook( 'init', 'register_setting_pages' );
     add_filter( 'proud_submenu_parent_limit', array( $this, 'submenu_alter' ) );
     add_filter( 'proud_navbar_logo_url', array( $this, 'logo_url' ) );
     add_filter( 'proud_nav_action_toolbar', array( $this, 'action_toolbar' ) );
     add_filter( 'proud_nav_primary_menu', array( $this, 'navbar_primary_menu' ) );
+  }
+
+
+  /**
+   * Register admin settings pages
+   */ 
+  public function register_setting_pages() {
+    if( is_admin() ) {
+      require_once( plugin_dir_path(__FILE__) . 'settings/subsite.php' );
+    }
   }
 
   /**
