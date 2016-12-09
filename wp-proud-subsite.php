@@ -30,7 +30,9 @@ class ProudSubsite extends \ProudPlugin {
     $this->hook( 'init', 'register_setting_pages' );
     add_filter( 'proud_submenu_parent_limit', array( $this, 'submenu_alter' ) );
     add_filter( 'proud_navbar_logo_url', array( $this, 'logo_url' ) );
-    add_filter( 'proud_nav_action_toolbar', array( $this, 'action_toolbar' ) );
+    // Filter buttons
+    add_filter( 'proud_nav_button_options', array( $this, 'nav_button_options' ), 10, 3 );
+    $this->hook( 'proud_nav_toolbar_pre_buttons', 'nav_toolbar_pre_buttons' );
     add_filter( 'proud_nav_primary_menu', array( $this, 'navbar_primary_menu' ) );
   }
 
@@ -74,12 +76,43 @@ class ProudSubsite extends \ProudPlugin {
   /**
    *  Modify toolbar
    */
-  public function action_toolbar( $toolbar ) {
-    ob_start();
-    include plugin_dir_path(__FILE__) . 'templates/subsite-toolbar.php';
-    $toolbar = ob_get_contents();
-    ob_end_clean();
-    return $toolbar;
+  public function nav_button_options( $options, $button, $display ) {
+    $link_to_main = get_option( 'proud_subsite_link_toolbar_parent', [
+      'payments' => 'payments',
+      'report' => 'report'
+    ] );
+    // We're linking to main instead of standard
+    if( !empty( $link_to_main[$button] ) ) {
+      $href = get_option( 'proud_subsite_parent_site' );
+      switch($button) {
+        case 'answers':
+          $href .= '/answers';
+          break;
+        case 'payments':
+          $href .= '/payments';
+          break;
+        case 'report':
+          $href .= '/issues';
+          break;
+        case 'search':
+          $href .= '/search-site';
+          break;
+      }
+      $options['data_key']= false;
+      $options['href'] = $href;
+      $options['classes'] .= ' same-window';
+    }
+    return $options;
+  }
+
+  /**
+   *  Insert home link
+   */
+  public function nav_toolbar_pre_buttons() {
+    if( !get_option( 'proud_subsite_primary_menu' ) ) {
+      $parent_url = get_option( 'proud_subsite_parent_site' );
+      include plugin_dir_path(__FILE__) . 'templates/subsite-toolbar.php';
+    }
   }
 
 

@@ -17,6 +17,10 @@ class ProudSubsitePage extends ProudSettingsPage
         '', // Option
         [ // Options
           'proud_subsite_parent_site' => '',
+          'proud_subsite_link_toolbar_parent' => [
+            'payments' => 'payments',
+            'report' => 'report'
+          ],
           'proud_subsite_primary_menu' => '',
         ] 
       );
@@ -32,12 +36,22 @@ class ProudSubsitePage extends ProudSettingsPage
           '#title' => __pcHelp('Parent site url'),
           '#description' => __pcHelp('Enter the parent site URL of this subsite without traling slash ex: https://example.proudcity.com'),
         ],
+        'proud_subsite_link_toolbar_parent' => [
+          '#type' => 'checkboxes',
+          '#title' => 'Link navbar button to main site',
+          '#description' => 'Choose which buttons should link to the main site, and which should operate locally.',
+          '#options' => [
+            'answers' => __pcHelp( 'Answers' ), 
+            'payments' => __pcHelp( 'Payments' ), 
+            'report' => __pcHelp( 'Report Issue' ),
+            'search' => __pcHelp( 'Search' ),
+          ],
+        ],
         'proud_subsite_primary_menu' => [
           '#type' => 'textarea',
           '#title' => __pcHelp('Primary navigation code'),
           '#description' => __(sprintf('HTML code for the primary menu items.  Should look like %s. <strong>Leave blank to use this site\'s primary menu.</strong>', htmlentities( '<li><a>Title</a></li>' ) ), 'proud_subsite' ),
         ],
-
       ];
     }
 
