@@ -109,7 +109,7 @@ class ProudSubsite extends \ProudPlugin {
    *  Insert home link
    */
   public function nav_toolbar_pre_buttons() {
-    if( !get_option( 'proud_subsite_primary_menu' ) ) {
+    if( !get_option( 'proud_subsite_primary_menu' ) && !get_option( 'proud_subsite_hide_main_btn' ) ) {
       $parent_url = get_option( 'proud_subsite_parent_site' );
       include plugin_dir_path(__FILE__) . 'templates/subsite-toolbar.php';
     }
@@ -130,7 +130,8 @@ class ProudSubsite extends \ProudPlugin {
     }
     return $menu;
   }
+    
 
 }// class
 
-$ProudSubsite = new ProudSubsite;
+new ProudSubsite;

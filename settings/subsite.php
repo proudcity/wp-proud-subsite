@@ -21,6 +21,7 @@ class ProudSubsitePage extends ProudSettingsPage
             'payments' => 'payments',
             'report' => 'report'
           ],
+          'proud_subsite_hide_main_btn' => false, 
           'proud_subsite_primary_menu' => '',
         ] 
       );
@@ -35,6 +36,11 @@ class ProudSubsitePage extends ProudSettingsPage
           '#type' => 'text',
           '#title' => __pcHelp('Parent site url'),
           '#description' => __pcHelp('Enter the parent site URL of this subsite without traling slash ex: https://example.proudcity.com'),
+        ],
+        'proud_subsite_hide_main_btn' => [
+          '#type' => 'checkbox',
+          '#title' => __pcHelp('Hide the "Main Site" button in the header?'),
+          '#return_value' => true,
         ],
         'proud_subsite_link_toolbar_parent' => [
           '#type' => 'checkboxes',
